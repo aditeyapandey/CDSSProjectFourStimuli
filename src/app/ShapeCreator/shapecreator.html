@@ -1,0 +1,24 @@
+
+<h1  class="text-sm-center">Experiment</h1>
+<div id="accordion" role="tablist" aria-multiselectable="true">
+  <div *ngFor="let shape of shapes;let i = index" class="card">
+    <div class="card-header" role="tab" id="headingOne">
+      <h5 class="mb-0">
+        <a data-toggle="collapse" data-parent="#accordion" [href]="'#collapse'+i" aria-expanded="true" aria-controls="collapseOne" (click)="draw(shape.name)">
+          {{shape.name}}
+        </a>
+      </h5>
+    </div>
+
+    <div [id]="'collapse'+i" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+      <div class="card-block">
+        <div class="row">
+          <div class="col-4"><svg version="1.1" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" [id]="shape.name">
+            <circle fill="#F7941E" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" cx="50" cy="50" r="40" opacity="0.6" />
+          </svg></div>
+          <div class="col-8">col-4</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
