@@ -17,10 +17,10 @@ export class DataService {
 
   getAll() {
     return [
-      { id: "#collapseOne", name: 'Rectangle'},
-      { id: "#collapseTwo", name: 'Petals' },
-      { id: "#collapseThree", name: 'TotemPole'},
-      { id: "#collapseFour", name: 'Face'}
+      { id: "#collapseOne", name: 'Rectangle',instruction:"This stimuli will test categorization efficiency of a rectangular shape."},
+      { id: "#collapseTwo", name: 'Petals',instruction:"This stimuli will test categorization efficiency of petals as glyph." },
+      { id: "#collapseThree", name: 'TotemPole',instruction:"This stimuli will test categorization efficiency of a Totempole ."},
+      { id: "#collapseFour", name: 'Face',instruction:"This stimuli will test categorization efficiency of a Face."}
     ];
   }
 

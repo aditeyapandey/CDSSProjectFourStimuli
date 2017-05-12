@@ -5,35 +5,42 @@ import { Component, OnInit } from '@angular/core';
 declare var d3: any;
 
 import {DataService} from "../services/data.service"
-import { Rectangle,Petals,Man,Face } from '../models/index';
+import { Rectangle,Petals,Man,Face,Experiment } from '../models/index';
 
 
 @Component({
   selector: 'app-shape',
   templateUrl: './shapecreator.html',
   styleUrls: ['./shapecreator.css'],
-  providers: [DataService]
+  providers: [DataService,Experiment]
 })
 
 export class ShapeCreator {
-  rectangle: Rectangle= new Rectangle();
   petals: Petals= new Petals();
   man: Man= new Man();
   face: Face= new Face();
   shapes:any[];
+  training_trials:number
+  testing_trails:number
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService,private experiment:Experiment) {
+    this.testing_trails=experiment.getTestTrials();
+    this.training_trials=experiment.getTrainingTrials();
+
+  }
 
   ngOnInit()
   {
     this.shapes=this.dataService.getAll();
+
   }
-  draw(shape:string)
+  initialize(shape:string)
   {
     console.log(shape)
     if(shape=="Face")
     {
       this.drawFace(shape)
+
     }
     if(shape=="TotemPole")
     {
@@ -41,6 +48,10 @@ export class ShapeCreator {
     }
     if(shape=="Petals"){
       this.drawPetals(shape);
+    }
+    if(shape=="Rectangle")
+    {
+      this.drawRectangles(shape)
     }
   }
   drawFace(shape:string)
@@ -61,6 +72,10 @@ export class ShapeCreator {
     console.log(arcPath);
     d3.select("#"+shape).append("line").attr("x1",cx-cx/5).attr("y1",cy+cy/3).attr("x2",cx+cx/5).attr("y2",cy+cy/3).attr("stroke","black");
     //d3.select("svg").append("path").attr("d",arcPath).attr("stroke","black").style("fill","white")
+  }
+  setInstruction()
+  {
+
   }
   drawMan(shape:String)
   {
@@ -160,6 +175,17 @@ export class ShapeCreator {
     let y= cy + (r * Math.sin(theta))
 
     return {x:x,y:y}
+  }
+
+  drawRectangles(shape:string)
+  {
+    let width=100;
+    let height = 100;
+    d3.select("#"+shape).append("rect").attr("x", 0).attr("y", 3.5*(height/10)).attr("width", 3*(width/10)).attr("height", 3*(height/10)).attr("stroke","black").style("fill","white");
+    d3.select("#"+shape).append("rect").attr("x", (3*(width/10))+5).attr("y", 3.5*(height/10)).attr("width", 3*(width/10)).attr("height", 3*(height/10)).attr("stroke","black").style("fill","white");
+    d3.select("#"+shape).append("rect").attr("x", (6*(width/10))+10).attr("y", 3.5*(height/10)).attr("width", 3*(width/10)).attr("height", 3*(height/10)).attr("stroke","black").style("fill","white");
+
+
   }
 
 }

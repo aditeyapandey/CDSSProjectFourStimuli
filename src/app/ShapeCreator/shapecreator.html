@@ -4,7 +4,7 @@
   <div *ngFor="let shape of shapes;let i = index" class="card">
     <div class="card-header" role="tab" id="headingOne">
       <h5 class="mb-0">
-        <a data-toggle="collapse" data-parent="#accordion" [href]="'#collapse'+i" aria-expanded="true" aria-controls="collapseOne" (click)="draw(shape.name)">
+        <a data-toggle="collapse" data-parent="#accordion" [href]="'#collapse'+i" aria-expanded="true" aria-controls="collapseOne" (click)="initialize(shape.name)">
           {{shape.name}}
         </a>
       </h5>
@@ -14,9 +14,28 @@
       <div class="card-block">
         <div class="row">
           <div class="col-4"><svg version="1.1" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" [id]="shape.name">
-            <circle fill="#F7941E" stroke="#231F20" stroke-width="2" stroke-miterlimit="10" cx="50" cy="50" r="40" opacity="0.6" />
           </svg></div>
-          <div class="col-8">col-4</div>
+          <div class="col-8">
+            <h3  class="text-sm-center">Details</h3>
+            <h5>{{shape.instruction}}</h5>
+            <br>
+            <div class="form-group row">
+              <label for="example-text-input" class="col-3 col-form-label">Training Trials :</label>
+              <div class="col-9">
+                <input class="form-control" type="text" [value]="training_trials" id="example-text-input">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-text-input" class="col-3 col-form-label">Testing Trials :</label>
+              <div class="col-9">
+                <input class="form-control" type="text" [value]="testing_trails" id="example-text-input1">
+              </div>
+
+            </div>
+            <button type="button" class="btn btn-secondary btn-lg btn-block">VIEW DEMO</button>
+            <button type="button" class="btn btn-primary btn-lg btn-block">BEGIN EXPERIMENT</button>
+
+          </div>
         </div>
       </div>
     </div>

@@ -5,4 +5,5 @@ export * from './faces';
 export * from './man';
 export * from './petals';
 export * from './rectangle';
+export * from './experiment.details.model'
 
