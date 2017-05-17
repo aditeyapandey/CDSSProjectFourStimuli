@@ -24,4 +24,6 @@ export class DataService {
     ];
   }
 
+  //randomOrderGenerator(array1:any[],cat1:number,array2:any[],)
+
 }

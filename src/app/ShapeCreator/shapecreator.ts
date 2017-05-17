@@ -4,8 +4,11 @@
 import { Component, OnInit } from '@angular/core';
 declare var d3: any;
 
-import {DataService} from "../services/data.service"
+import {DataService} from "../Services/data.service"
 import { Rectangle,Petals,Man,Face,Experiment } from '../models/index';
+import {Router} from '@angular/router'
+
+
 
 
 @Component({
@@ -26,7 +29,6 @@ export class ShapeCreator {
   constructor(private dataService: DataService,private experiment:Experiment) {
     this.testing_trails=experiment.getTestTrials();
     this.training_trials=experiment.getTrainingTrials();
-
   }
 
   ngOnInit()
@@ -51,7 +53,9 @@ export class ShapeCreator {
     }
     if(shape=="Rectangle")
     {
+      //this.parentRouter.navigateByUrl('/experiment');
       this.drawRectangles(shape)
+
     }
   }
   drawFace(shape:string)
@@ -187,5 +191,6 @@ export class ShapeCreator {
 
 
   }
+
 
 }
