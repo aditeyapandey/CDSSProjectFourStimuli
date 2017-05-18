@@ -8,6 +8,8 @@ import { ShapeCreator } from './ShapeCreator/shapecreator';
 import { RouterModule, Routes } from '@angular/router';
 import { ExperimentSetup } from "./experiment/experiment.component"
 
+
+
 const routing = RouterModule.forRoot([
   { path: 'shape',      component: ShapeCreator },
   { path: '', component: ExperimentSetup },

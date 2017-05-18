@@ -6,11 +6,13 @@ export class Experiment {
   id: number
   number_training_trials:number
   number_test_trials:number
+  currentSelection:string
 
   constructor()
   {
     this.number_training_trials=100;
     this.number_test_trials=100
+    this.currentSelection="Rectangle"
   }
 
   getTrainingTrials()
@@ -28,6 +30,14 @@ export class Experiment {
   setTestTrials(value:number)
   {
     this.number_test_trials=value;
+  }
+  setCurrentSelection(selectedShape:string)
+  {
+    this.currentSelection=selectedShape;
+  }
+  getCurrentSelection()
+  {
+    return this.currentSelection;
   }
 
 

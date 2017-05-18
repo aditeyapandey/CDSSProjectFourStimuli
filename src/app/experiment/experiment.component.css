@@ -1,3 +1,13 @@
 h1{
   margin-top: 2%;
 }
+body {height: 100%;}
+
+.container{
+  overflow-y:hidden;
+}
+
+
+svg{
+  stroke-width: 0.5;
+}

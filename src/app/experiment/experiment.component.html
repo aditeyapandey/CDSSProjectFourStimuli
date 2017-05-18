@@ -6,20 +6,47 @@
 </head>
 <body>
 <h1  class="text-sm-center">
-
+{{experimentType}}
 </h1>
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <svg version="1.1" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content">
-        <circle cx="50" cy="50" r="34">
-          <title>Mute Audio</title>
-        </circle>
-      </svg>
-    </div>
 
+  <!--</div>-->
+
+  <div class="card" >
+    <div class="row">
+        <div class="col-2">
+        </div>
+
+      <div class="col-8">
+      <svg version="1.1"  viewBox="-15 0 100 80" preserveAspectRatio="xMinYMin meet" class="svg-content" id="svgContainer">
+      </svg>
+      </div>
+
+        <div class="col-2">
+        </div>
+
+
+        </div>
   </div>
 
-</div>
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h2 class="text-danger text-sm-center" [innerHtml]="htmlToAddFirst"></h2>Press 1 for Category 1</li>
+            <li class="list-group-item"><h2 class="text-danger text-sm-center" [innerHtml]="htmlToAddSecond"></h2>Press 2 for Category 2</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
