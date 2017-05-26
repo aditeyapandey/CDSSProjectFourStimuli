@@ -6,4 +6,5 @@ export * from './man';
 export * from './petals';
 export * from './rectangle';
 export * from './experiment.details.model'
+export * from "./params.model"
 

@@ -122,7 +122,7 @@
         </div>
         <br>
         <div class="container text-center">
-          <button  routerLink="/experiment" type="button" class="btn btn-success btn-lg btn-block" data-dismiss="modal" >I agree</button>
+          <button  [routerLink]="['/experiment',activeShape]" type="button" class="btn btn-success btn-lg btn-block" data-dismiss="modal" (click)="setActiveShape()">I agree</button>
           <button type="button" class="btn btn-danger btn-lg btn-block" data-dismiss="modal"  >No thanks, I do not want to do this HIT</button>
         </div>
 

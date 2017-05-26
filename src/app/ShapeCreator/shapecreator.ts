@@ -6,6 +6,7 @@ declare var d3: any;
 
 import {DataService} from "../Services/data.service"
 import {ShapeService} from "../Services/shape.service"
+import {HelperService} from "../Services/helper.service"
 import { Rectangle,Petals,Man,Face,Experiment } from '../models/index';
 import {Router} from '@angular/router'
 
@@ -13,7 +14,7 @@ import {Router} from '@angular/router'
   selector: 'app-shape',
   templateUrl: './shapecreator.html',
   styleUrls: ['./shapecreator.css'],
-  providers: [DataService,Experiment,ShapeService]
+  providers: [DataService,Experiment,ShapeService,HelperService]
 })
 
 export class ShapeCreator {
@@ -23,8 +24,9 @@ export class ShapeCreator {
   shapes:any[];
   training_trials:number
   testing_trails:number
+  activeShape:string
 
-  constructor(private dataService: DataService,private experiment:Experiment,private shapeService: ShapeService) {
+  constructor(private dataService: DataService,private experiment:Experiment,private shapeService: ShapeService,private helperService:HelperService) {
     this.testing_trails=experiment.getTestTrials();
     this.training_trials=experiment.getTrainingTrials();
   }
@@ -37,6 +39,7 @@ export class ShapeCreator {
   initialize(shape:string)
   {
     console.log(shape)
+     this.activeShape=shape;
     if(shape=="Face")
     {
       this.shapeService.drawFace(shape,100,100)
@@ -52,12 +55,18 @@ export class ShapeCreator {
     if(shape=="Rectangle")
     {
       //this.parentRouter.navigateByUrl('/experiment');
-      this.shapeService.drawRectangles(shape,100,100)
+      this.shapeService.drawRectangles(shape,100,100,[true,true,true])
 
     }
+
   }
 
-
+  setActiveShape()
+  {
+    console.log(this.activeShape)
+    this.helperService.setCurrentSelection(this.activeShape)
+    this.helperService.setCurrentSearchTerm(this.activeShape)
+  }
 
 
 }

@@ -12,7 +12,6 @@ export class Experiment {
   {
     this.number_training_trials=100;
     this.number_test_trials=100
-    this.currentSelection="Rectangle"
   }
 
   getTrainingTrials()

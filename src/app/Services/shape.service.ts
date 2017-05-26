@@ -17,18 +17,31 @@ export class ShapeService {
 
   constructor(private http: Http) { }
 
-  drawRectangles(shape:string,widthRect:number,heightRect:number)
+  drawRectangles(shape:string,widthRect:number,heightRect:number,featureArray:any)
   {
     console.log("reaching here")
     let width=widthRect;
     let height = heightRect;
     d3.select("#svgContainer")
-    d3.select("#"+shape).append("rect").attr("x", 0).attr("y", 3.5*(height/10)).attr("width", 3*(width/10)).attr("height", 3*(height/10)).attr("stroke","black").style("fill","white");
-    d3.select("#"+shape).append("rect").attr("x", (3*(width/10))+5).attr("y", 3.5*(height/10)).attr("width", 3*(width/10)).attr("height", 3*(height/10)).attr("stroke","black").style("fill","white");
-    d3.select("#"+shape).append("rect").attr("x", (6*(width/10))+10).attr("y", 3.5*(height/10)).attr("width", 3*(width/10)).attr("height", 3*(height/10)).attr("stroke","black").style("fill","white");
-
+    d3.select("#"+shape).append("rect").attr("x", 0).attr("y", 3.5*(height/10)).attr("width", 3*(width/10)).attr("height", 3*(height/10)).attr("stroke","black").style("fill",this.rectFill(featureArray[0]));
+    d3.select("#"+shape).append("rect").attr("x", (3*(width/10))+5).attr("y", 3.5*(height/10)).attr("width", 3*(width/10)).attr("height", 3*(height/10)).attr("stroke","black").style("fill",this.rectFill(featureArray[1]));
+    d3.select("#"+shape).append("rect").attr("x", (6*(width/10))+10).attr("y", 3.5*(height/10)).attr("width", 3*(width/10)).attr("height", 3*(height/10)).attr("stroke","black").style("fill",this.rectFill(featureArray[2]));
 
   }
+
+  rectFill(feature):string
+  {
+    if(feature)
+    {
+      return "black"
+    }
+    else{
+      return "white"
+    }
+
+  }
+
+
 
   drawFace(shape:string,widthFace:number,heightFace:number)
   {
@@ -104,9 +117,9 @@ export class ShapeService {
     let wedges= this.drawWedges(cx,cy,r);
     console.log(wedges)
 
-    let wedgesKeys=['firstWedge','secondWedge',"thirdWedge"];
+    let wedgesKeys=['secondWedge',"thirdWedge"];
 
-    for (let i=0;i<3;i++)
+    for (let i=0;i<2;i++)
     {
       this.drawLines(wedges[wedgesKeys[i]],shape)
     }

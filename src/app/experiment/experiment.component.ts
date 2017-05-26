@@ -4,7 +4,7 @@
 /**
  * Created by aditeyapandey on 5/11/17.
  */
-import { Component, OnInit,HostListener } from '@angular/core';
+import { Component, OnInit,HostListener,NgZone } from '@angular/core';
 declare var d3: any;
 declare var jsPsych:any
 
@@ -13,8 +13,13 @@ import {DataService} from "../Services/data.service"
 import {ShapeService} from "../Services/shape.service"
 
 
-import { Rectangle,Petals,Man,Face,Experiment } from '../models/index';
+import { Rectangle,Petals,Man,Face,Experiment,Parameters } from '../models/index';
 import {ignoreElements} from "rxjs/operator/ignoreElements";
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute } from '@angular/router';
+import {FirebaseService} from"../Services/firebase.service"
+
+
 
 
 
@@ -22,17 +27,38 @@ import {ignoreElements} from "rxjs/operator/ignoreElements";
   selector: 'app-shape',
   templateUrl: './experiment.component.html',
   styleUrls: ['./experiment.component.css'],
-  providers: [HelperService,DataService,HostListener,Experiment,ShapeService]
+  providers: [HelperService,DataService,HostListener,Experiment,ShapeService,FirebaseService,Parameters]
 })
 
 export class ExperimentSetup {
 
   private key: any
-  private experimentType:string
-  private htmlToAddFirst:string
-  private htmlToAddSecond:string
+  experimentType:string
+  htmlToAddFirst:string
+  htmlToAddSecond:string
+  subscription: Subscription;
+  private sub:any
+  private innerWidth: number;
+  private innerHeight: number;
+  private counterDisplay:string;
 
-  constructor(private dataService: DataService, private helperService: HelperService, private handleKeyboarEvent: HostListener,private experiment:Experiment,private shapeService:ShapeService) {
+  viewbox:string
+  private response:string
+  private sampleNumber:number
+  private trainingSample:any
+  private visHeight:number
+  private visWidth:number
+
+
+  constructor(private route: ActivatedRoute,private dataService: DataService,private zone: NgZone, private helperService: HelperService, private handleKeyboarEvent: HostListener,private experiment:Experiment,private shapeService:ShapeService,private  firebaseService:FirebaseService,private param:Parameters) {
+    this.zone.run(() => {
+      this.helperService.getCurrentSearchTerm().subscribe(searchTerm => this.experimentType = searchTerm);
+      console.log(this.experimentType)
+      console.log(jsPsych.turk.turkInfo())
+      this.sampleNumber=1;
+      this.counterDisplay=this.sampleNumber+"/100"
+    })
+
   }
 
 
@@ -41,6 +67,9 @@ export class ExperimentSetup {
   private handleKeyboardEvent(event: KeyboardEvent) {
     this.key = event.key;
     console.log(this.key)
+
+    this.firebaseService.setData("Amriteya","Pandey").subscribe(user => this.response= JSON.stringify(user))
+
     if(this.key==1) {
       this.htmlToAddFirst = '1';
       setTimeout(() => {
@@ -58,25 +87,76 @@ export class ExperimentSetup {
 
   ngOnInit()
   {
-    this.experimentType=this.experiment.getCurrentSelection();
 
-    this.shapeService.drawPetals("svgContainer",80,80)
-    this.shapeService.drawRectangles("svgContainer",80,80)
-
-   this.shapeService.drawFace("svgContainer",80,80)
-
-    this.shapeService.drawMan("svgContainer",80,80)
-
+      this.sub = this.route.params.subscribe(params => {
+      this.experimentType = params['id']; // (+) converts string 'id' to a number
+      console.log(this.experimentType)
+      // In a real app: dispatch action to load the details here.
+      var x = d3.scaleOrdinal()
+        .domain([100, 90, 80, 70,60, 50,40,30,20])
+        .range([-5, -10, -15, -20, -25, -30, -35, -40, -45]);
+      this.innerWidth = (window.innerWidth) ;
+      this.innerHeight = (window.innerHeight);
+      console.log("height of screen is",this.innerHeight)
+      this.viewbox=x(Math.floor(this.innerHeight/100)*10)+5+" "+"0 "+"100 "+Math.floor(this.innerHeight/100)*10
+      this.testExperiment()
+    });
 
   }
 
   testExperiment()
   {
+    //Importing the params as defined in the parameters model
+    let params = {
+      n_trials_train:this.param.n_trials_train,
+      n_trials_Test:this.param.n_trials_Test,
+      keyChoices:this.param.keyChoices,
+      Nstim_Cat1:this.param.Nstim_Cat1,
+      Nstim_Cat2:this.param.Nstim_Cat2,
+      allFeatures:this.param.allFeatures
+    }
 
-    let array1=[2,2,2,6,6,6,27];
-    let array2=[13,13,13,3,3,3,1];
+    //Generating the training samples
+    let trainingSamples=this.helperService.generate_fixed_trails(params);
+    this.trainingSample=trainingSamples;
 
-    this.helperService.randomOrderGenerator(array1,1,array2,0)
+    let visHeigt=Math.floor(this.innerHeight/100)*10
+    let visWidth=Math.floor(this.innerHeight/100)*10
+
+    this.visHeight=visHeigt;
+    this.visWidth=visWidth;
+
+    console.log(visHeigt)
+
+    if(this.experimentType=="Face")
+    {
+      this.shapeService.drawFace("svgContainer",visWidth,visHeigt)
+
+    }
+    if(this.experimentType=="TotemPole")
+    {
+      this.shapeService.drawMan("svgContainer",visWidth,visHeigt)
+    }
+    if(this.experimentType=="Petals"){
+      this.shapeService.drawPetals("svgContainer",visWidth,visHeigt);
+    }
+    if(this.experimentType=="Rectangle")
+    {
+      //this.parentRouter.navigateByUrl('/experiment');
+      this.shapeService.drawRectangles("svgContainer",visWidth,visHeigt,trainingSamples.features[0])
+
+    }
+
+
+  }
+
+  fetchNextTrainingSample()
+  {
+    console.log("called")
+    this.sampleNumber=this.sampleNumber+1;
+    this.counterDisplay=this.sampleNumber+"/100"
+
+      this.shapeService.drawRectangles("svgContainer",this.visWidth,this.visHeight,this.trainingSample.features[this.sampleNumber-1])
 
 
   }
