@@ -40,7 +40,7 @@ export class ExperimentSetup {
   private sub:any
   private innerWidth: number;
   private innerHeight: number;
-  private counterDisplay:string;
+  public counterDisplay:string;
 
   viewbox:string
   private response:string
@@ -48,6 +48,8 @@ export class ExperimentSetup {
   private trainingSample:any
   private visHeight:number
   private visWidth:number
+  public category1:string
+  public category2:string
 
 
   constructor(private route: ActivatedRoute,private dataService: DataService,private zone: NgZone, private helperService: HelperService, private handleKeyboarEvent: HostListener,private experiment:Experiment,private shapeService:ShapeService,private  firebaseService:FirebaseService,private param:Parameters) {
@@ -144,7 +146,20 @@ export class ExperimentSetup {
     {
       //this.parentRouter.navigateByUrl('/experiment');
       this.shapeService.drawRectangles("svgContainer",visWidth,visHeigt,trainingSamples.features[0])
+      this.shapeService.drawRectangles("instructionSVG",visWidth,visHeigt,trainingSamples.features[0])
 
+
+    }
+
+    //Giving color to the span category
+    if(trainingSamples.true_category[this.sampleNumber-1]==1)
+    {
+      this.category1="crimson"
+      this.category2="gray"
+    }
+    else{
+      this.category1="gray"
+      this.category2="crimson"
     }
 
 
@@ -152,13 +167,37 @@ export class ExperimentSetup {
 
   fetchNextTrainingSample()
   {
-    console.log("called")
+    //Displaying the next sample
     this.sampleNumber=this.sampleNumber+1;
     this.counterDisplay=this.sampleNumber+"/100"
 
-      this.shapeService.drawRectangles("svgContainer",this.visWidth,this.visHeight,this.trainingSample.features[this.sampleNumber-1])
+    this.shapeService.drawRectangles("svgContainer",this.visWidth,this.visHeight,this.trainingSample.features[this.sampleNumber-1])
 
+    //Giving color to the span category
+    if(this.trainingSample.true_category[this.sampleNumber-1]==1)
+    {
+      this.category1="crimson"
+      this.category2="gray"
+    }
+    else{
+      this.category1="gray"
+      this.category2="crimson"
+    }
+
+    if(this.sampleNumber==2)
+    {
+        this.showExperimentInstruction()
+    }
 
   }
+
+  showExperimentInstruction()
+  {
+    d3.select("#svgContainer").remove()
+    d3.select("#expins").style("display","")
+    d3.select("#expins1").style("display","")
+
+  }
+
 
 }

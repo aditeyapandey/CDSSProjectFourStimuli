@@ -13,7 +13,14 @@ svg{
   stroke-width: 0.5;
 }
 
+text{
+  stroke-width: 0.1;
+}
 
+.headerSpan{
+  font-size: 150%;
+
+}
 
 
 #button {
