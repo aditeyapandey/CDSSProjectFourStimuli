@@ -3,10 +3,24 @@
  */
 
 export class Experiment {
+  get workerid(): string {
+    return this._workerid;
+  }
+
+  get responseArray(): number[] {
+    return this._responseArray;
+  }
+
+  get trueCategory(): number[] {
+    return this._trueCategory;
+  }
   id: number
   number_training_trials:number
   number_test_trials:number
   currentSelection:string
+  _workerid:string
+  _responseArray:number[]
+  _trueCategory:number[]
 
   constructor()
   {
@@ -38,6 +52,7 @@ export class Experiment {
   {
     return this.currentSelection;
   }
+
 
 
 }

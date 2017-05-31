@@ -42,15 +42,15 @@ export class ShapeCreator {
      this.activeShape=shape;
     if(shape=="Face")
     {
-      this.shapeService.drawFace(shape,100,100)
+      this.shapeService.drawFace(shape,100,100,[true,true,true])
 
     }
     if(shape=="TotemPole")
     {
-      this.shapeService.drawMan(shape,100,100)
+      this.shapeService.drawMan(shape,100,100,[true,true,true])
     }
     if(shape=="Petals"){
-      this.shapeService.drawPetals(shape,100,100);
+      this.shapeService.drawPetals(shape,100,100,[true,true,true]);
     }
     if(shape=="Rectangle")
     {
@@ -61,11 +61,15 @@ export class ShapeCreator {
 
   }
 
-  setActiveShape()
+  setActiveShape(training,test)
   {
     console.log(this.activeShape)
+    console.log(training)
+    console.log(test)
     this.helperService.setCurrentSelection(this.activeShape)
-    this.helperService.setCurrentSearchTerm(this.activeShape)
+    this.helperService.setTestTrials(test);
+    this.helperService.setTrainingTrials(training);
+    console.log(this.experiment.getTestTrials())
   }
 
 

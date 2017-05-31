@@ -19,13 +19,13 @@
 
       <div class="col-8">
 
-        <div  id="expins1" class="card-block" style="display:none">
+        <div  id="expins10" class="card-block" style="display:none">
           <div class="row">
-            <div class="col-4"><svg version="1.1" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG">
+            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG10">
             </svg></div>
-            <div class="col-8">
+            <div class="col-6">
 
-              Next, you'll see examples of figures and decide which family they are belong to:
+              <p>  Next, you'll see examples of figures and decide which family they belong to:</p>
               <ol  >
               <li> Press the '1' key for Family 1.</li>
               <li> Press the '2' key for Family 2. </li>
@@ -35,7 +35,185 @@
           </div>
         </div>
 
-      <svg version="1.1"   [attr.viewBox]="viewbox" preserveAspectRatio="xMinYMin meet" class="svg-content" id="svgContainer">
+        <div  id="expins1" class="card-block" style="">
+          <div class="row">
+            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG1">
+            </svg></div>
+            <div class="col-6" >
+            <p>
+             In this experiment, you will see a series of figures like the one on the left.
+            </p>
+            </div>
+          </div>
+        </div>
+
+        <div  id="expins2" class="card-block" style="display:none">
+          <div class="row">
+            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG2">
+
+              <!--<line *ngIf="experimentType=='Rectangle'" x1="10" y1="30" x2="10" y2="60" style="stroke:rgb(255,0,0);stroke-width:1" />-->
+
+              <!--<line *ngIf="experimentType=='Rectangle'" x1="37" y1="30" x2="37" y2="60" style="stroke:rgb(255,0,0);stroke-width:1" />-->
+
+              <!--<line *ngIf="experimentType=='Rectangle'" x1="63" y1="30" x2="63" y2="60" style="stroke:rgb(255,0,0);stroke-width:1" />-->
+
+              <!--<text *ngIf="experimentType=='Rectangle'" x="0" y="64" fill="red" style="font-size: 5px">Feature 1</text>-->
+              <!--<text *ngIf="experimentType=='Rectangle'" x="26" y="64" fill="red" style="font-size: 5px">Feature 2</text>-->
+              <!--<text *ngIf="experimentType=='Rectangle'" x="52" y="64" fill="red" style="font-size: 5px">Feature 3</text>-->
+
+             <!--Petals   -->
+              <!--<line *ngIf="experimentType=='Petals'" x1="10" y1="30" x2="10" y2="55" style="stroke:rgb(255,0,0);stroke-width:1" />-->
+
+              <!--<line *ngIf="experimentType=='Petals'" x1="35" y1="65" x2="35" y2="85" style="stroke:rgb(255,0,0);stroke-width:1" />-->
+
+              <!--<line *ngIf="experimentType=='Petals'" x1="63" y1="30" x2="63" y2="55" style="stroke:rgb(255,0,0);stroke-width:1" />-->
+
+              <!--<text *ngIf="experimentType=='Petals'" x="0" y="62" fill="red" style="font-size: 5px">Feature 3</text>-->
+              <!--<text *ngIf="experimentType=='Petals'" x="26" y="90" fill="red" style="font-size: 5px">Feature 2</text>-->
+              <!--<text *ngIf="experimentType=='Petals'" x="52" y="62" fill="red" style="font-size: 5px">Feature 1</text>-->
+
+              <!--TotemPole   -->
+              <!--<line *ngIf="experimentType=='TotemPole'" x1="35" y1="10" x2="35" y2="-5" style="stroke:rgb(255,0,0);stroke-width:1" />-->
+
+              <!--<line *ngIf="experimentType=='TotemPole'" x1="10" y1="10" x2="10" y2="30" style="stroke:rgb(255,0,0);stroke-width:1" />-->
+
+              <!--<line *ngIf="experimentType=='TotemPole'" x1="35" y1="65" x2="35" y2="85" style="stroke:rgb(255,0,0);stroke-width:1" />-->
+
+              <!--<line *ngIf="experimentType=='TotemPole'" x1="63" y1="10" x2="63" y2="30" style="stroke:rgb(255,0,0);stroke-width:1" />-->
+
+              <!--<text *ngIf="experimentType=='TotemPole'" x="0" y="34" fill="red" style="font-size: 5px">Feature 2</text>-->
+              <!--<text *ngIf="experimentType=='TotemPole'" x="26" y="90" fill="red" style="font-size: 5px">Feature 3</text>-->
+              <!--<text *ngIf="experimentType=='TotemPole'" x="52" y="34" fill="red" style="font-size: 5px">Feature 2</text>-->
+              <!--<text *ngIf="experimentType=='TotemPole'" x="26" y="-6" fill="red" style="font-size: 5px">Feature 1</text>-->
+
+              <!--Face-->
+              <!--TotemPole   -->
+              <!--<line *ngIf="experimentType=='Face'" x1="30" y1="20" x2="30" y2="0" style="stroke:rgb(255,0,0);stroke-width:1" />-->
+
+              <!--<line *ngIf="experimentType=='Face'" x1="35" y1="37" x2="22" y2="37" style="stroke:rgb(255,0,0);stroke-width:1" />-->
+
+              <!--<line *ngIf="experimentType=='Face'" x1="35" y1="47" x2="35" y2="70" style="stroke:rgb(255,0,0);stroke-width:1" />-->
+
+
+              <!--<text *ngIf="experimentType=='Face'" x="0" y="38" fill="red" style="font-size: 5px">Feature 2</text>-->
+              <!--<text *ngIf="experimentType=='Face'" x="26" y="74" fill="red" style="font-size: 5px">Feature 3</text>-->
+              <!--<text *ngIf="experimentType=='Face'" x="26" y="-3" fill="red" style="font-size: 5px">Feature 1</text>-->
+
+
+
+
+            </svg>
+            </div>
+            <div class="col-6" >
+              <p>
+                Each figure can have 3 features.
+              </p>
+              <p>
+                The one on the left has all 3 features but some will have only 1 or 2.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div  id="expins3" class="card-block" style="display:none">
+          <div class="row">
+            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG3">
+            </svg></div>
+            <div class="col-6" >
+              <p>
+              For example, this one only has Feature 1.
+                  </p>
+            </div>
+          </div>
+        </div>
+        <div  id="expins4" class="card-block" style="display:none">
+          <div class="row">
+            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG4">
+            </svg></div>
+            <div class="col-6" >
+              <p>
+                This figure only has Feature 2.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div  id="expins5" class="card-block" style="display:none">
+          <div class="row">
+            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG5">
+            </svg></div>
+            <div class="col-6" >
+              <p>
+                This figure only has Feature 3.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div  id="expins6" class="card-block" style="display:none">
+          <div class="row">
+            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG6">
+            </svg></div>
+            <div class="col-6" >
+              <p>
+                Which features each figure has depends on which 'Family' it comes from.
+              </p>
+              <p>
+              There are 2 families and each figure you will see belongs to one of them.
+              </p>
+
+            </div>
+          </div>
+        </div>
+        <div  id="expins7" class="card-block" style="display:none">
+          <div class="row">
+            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG7">
+            </svg></div>
+            <div class="col-6" >
+              <p>
+              Some combinations of features are more common in Family 1 than in Family 2, and vice versa.
+              </p>
+              <p>
+                Your task will be to look at each figure and decide which family it's from.
+              </p>
+
+            </div>
+          </div>
+        </div>
+        <div  id="expins8" class="card-block" style="display:none">
+          <div class="row">
+            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG8">
+            </svg></div>
+            <div class="col-6" >
+              <p>
+                Here are a couple things to be aware of:
+              </p>
+              <ol >
+                <li> Each combination of features is present in each family, but will always be more common one family than the other.</li>
+                <li> About half of the figures are from Family 1 and half from Family 2. </li>
+              </ol>
+
+
+            </div>
+          </div>
+        </div>
+        <div  id="expins9" class="card-block" style="display:none">
+          <div class="row">
+            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG9">
+            </svg></div>
+            <div class="col-6" >
+              <p>
+                First, we'll show examples of figures and tell you which family each is from.
+              </p>
+              <p>
+                Try to learn which combinations of features occur in each family.
+              </p>
+
+            </div>
+          </div>
+        </div>
+
+      <svg style="display:none" version="1.1"   [attr.viewBox]="viewbox" preserveAspectRatio="xMinYMin meet" class="svg-content" id="svgContainer">
+
+
       </svg>
       </div>
 
@@ -60,7 +238,7 @@
               </div>
 
               <div class="col-3">
-                <button   type="button" id="button" (click)="fetchNextTrainingSample()"><span>Next </span></button>
+                <button   type="button" id="button" class="nextButton" (click)="loadInstructions()"><span>Next </span></button>
 
               </div>
 

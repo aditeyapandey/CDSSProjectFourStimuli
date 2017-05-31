@@ -23,6 +23,8 @@ import {FirebaseService} from"../Services/firebase.service"
 
 
 
+
+
 @Component({
   selector: 'app-shape',
   templateUrl: './experiment.component.html',
@@ -46,19 +48,38 @@ export class ExperimentSetup {
   private response:string
   private sampleNumber:number
   private trainingSample:any
+  private testExamples:any
   private visHeight:number
   private visWidth:number
   public category1:string
   public category2:string
+  private beginExperiment:boolean
+  private numberofTrials:number
+  private checkKey:number
+  private responseArray:number[]
+  private doublePress:boolean
+  private instructionPageNumber:number
+  public key1:number
+  public key2:number
+
 
 
   constructor(private route: ActivatedRoute,private dataService: DataService,private zone: NgZone, private helperService: HelperService, private handleKeyboarEvent: HostListener,private experiment:Experiment,private shapeService:ShapeService,private  firebaseService:FirebaseService,private param:Parameters) {
     this.zone.run(() => {
       this.helperService.getCurrentSearchTerm().subscribe(searchTerm => this.experimentType = searchTerm);
       console.log(this.experimentType)
-      console.log(jsPsych.turk.turkInfo())
-      this.sampleNumber=1;
-      this.counterDisplay=this.sampleNumber+"/100"
+      this.sampleNumber=0;
+      this.experiment._workerid=jsPsych.turk.turkInfo().workerId
+      console.log(this.experiment._workerid);
+      this.numberofTrials=10
+      console.log(this.numberofTrials)
+      this.counterDisplay=this.sampleNumber+"/"+this.numberofTrials
+      this.checkKey=-1
+      this.responseArray=[]
+      this.doublePress=false;
+      this.instructionPageNumber=0;
+      this.key=1;
+      this.key=2;
     })
 
   }
@@ -69,27 +90,60 @@ export class ExperimentSetup {
   private handleKeyboardEvent(event: KeyboardEvent) {
     this.key = event.key;
     console.log(this.key)
+    // if(this.doublePress) {
+    //   if (this.key == 1) {
+    //     this.key = -1
+    //     alert("please wait for the next sample to load")
+    //
+    //   }
+    //   if (this.key == 2)
+    //   {
+    //     this.key=-1
+    //     alert("please wait for the next sample to load")
+    //   }
+    //
+    // }
 
-    this.firebaseService.setData("Amriteya","Pandey").subscribe(user => this.response= JSON.stringify(user))
+    if(this.key==1 ) {
+      if(this.checkKey==1 || this.checkKey==2){
+        alert("please wait for the next sample to load")
+      }
+      else {
+        setTimeout(() => {
+          this.category1 = "crimson";
+          this.checkKey=1;
+          this.responseArray.push(1)
+          this.doublePress=true;
+        }, )
+        setTimeout(() => {
+          console.log("calling first key")
+          this.fetchNextTrainingSample()
+        }, 1000)
+      }
+    }
+    if(this.key==2 ) {
 
-    if(this.key==1) {
-      this.htmlToAddFirst = '1';
-      setTimeout(() => {
-        this.htmlToAddFirst = ""
-      }, 500)
+      if (this.checkKey == 2 || this.checkKey==1) {
+        alert("please wait for the next sample to load")
+      }
+      else {
+        setTimeout(() => {
+          this.category2 = "crimson";
+          this.checkKey = 2;
+          this.responseArray.push(2)
+          this.doublePress=true;
+        }, )
+        setTimeout(() => {
+          this.fetchNextTrainingSample()
+        }, 1000)
+      }
     }
-    if(this.key==2) {
-      this.htmlToAddSecond = '2';
-      setTimeout(() => {
-        this.htmlToAddSecond = ""
-      }, 500)
-    }
+
 
   }
 
   ngOnInit()
   {
-
       this.sub = this.route.params.subscribe(params => {
       this.experimentType = params['id']; // (+) converts string 'id' to a number
       console.log(this.experimentType)
@@ -100,9 +154,101 @@ export class ExperimentSetup {
       this.innerWidth = (window.innerWidth) ;
       this.innerHeight = (window.innerHeight);
       console.log("height of screen is",this.innerHeight)
-      this.viewbox=x(Math.floor(this.innerHeight/100)*10)+5+" "+"0 "+"100 "+Math.floor(this.innerHeight/100)*10
+      this.viewbox=x(Math.floor(this.innerHeight/100)*10)+5+" "+"0 "+"100 "+Math.floor(this.innerHeight/100)*10;
+      this.loadInstructions();
       this.testExperiment()
     });
+
+  }
+
+  loadInstructions()
+  {
+
+    if(this.instructionPageNumber<9) {
+      console.log("not here")
+      d3.select("#expins"+this.instructionPageNumber).style("display","none")
+      this.instructionPageNumber = this.instructionPageNumber + 1;
+      d3.select("#expins" + this.instructionPageNumber).style("display", "")
+
+      this.counterDisplay = ""
+      d3.selectAll(".headerSpan").style("display", "none")
+      let visHeigt = Math.floor(this.innerHeight / 100) * 10
+      let visWidth = Math.floor(this.innerHeight / 100) * 10
+
+      if (this.experimentType == "Rectangle") {
+        if (this.instructionPageNumber == 3) {
+          this.shapeService.drawRectangles("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [true, false, false])
+
+        }
+        else if (this.instructionPageNumber == 4) {
+          this.shapeService.drawRectangles("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [false, true, false])
+        }
+        else if (this.instructionPageNumber == 5) {
+          this.shapeService.drawRectangles("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [false, false, true])
+
+        }
+        else {
+          this.shapeService.drawRectangles("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [true, true, true])
+        }
+      }
+      if (this.experimentType == "Petals") {
+
+        if (this.instructionPageNumber == 3) {
+          this.shapeService.drawPetals("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [true, false, false])
+
+        }
+        else if (this.instructionPageNumber == 4) {
+          this.shapeService.drawPetals("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [false, true, false])
+
+        }
+        else if (this.instructionPageNumber == 5) {
+          this.shapeService.drawPetals("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [false, false, true])
+
+        }
+        else {
+          this.shapeService.drawPetals("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [true, true, true])
+        }
+      }
+      if (this.experimentType == "TotemPole") {
+        if (this.instructionPageNumber == 3) {
+          this.shapeService.drawMan("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [true, false, false])
+
+        }
+        else if (this.instructionPageNumber == 4) {
+          this.shapeService.drawMan("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [false, true, false])
+
+        }
+        else if (this.instructionPageNumber == 5) {
+          this.shapeService.drawMan("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [false, false, true])
+
+        }
+        else {
+          this.shapeService.drawMan("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [true, true, true])
+        }
+      }
+      if (this.experimentType == "Face") {
+        if (this.instructionPageNumber == 3) {
+          this.shapeService.drawFace("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [true, false, false])
+
+        }
+        else if (this.instructionPageNumber == 4) {
+          this.shapeService.drawFace("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [false, true, false])
+
+        }
+        else if (this.instructionPageNumber == 5) {
+          this.shapeService.drawFace("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [false, false, true])
+
+        }
+        else {
+          this.shapeService.drawFace("instructionSVG" + this.instructionPageNumber, visWidth, visHeigt, [true, true, true])
+        }
+      }
+    }
+    else{
+      console.log("ok")
+      d3.select("#expins"+this.instructionPageNumber).style("display","none")
+      this.fetchNextTrainingSample();
+    }
 
   }
 
@@ -120,7 +266,10 @@ export class ExperimentSetup {
 
     //Generating the training samples
     let trainingSamples=this.helperService.generate_fixed_trails(params);
+    let testSamples=this.helperService.generate_fixed_trails(params);
     this.trainingSample=trainingSamples;
+    this.testExamples=testSamples;
+    this.experiment._trueCategory=this.testExamples.true_category;
 
     let visHeigt=Math.floor(this.innerHeight/100)*10
     let visWidth=Math.floor(this.innerHeight/100)*10
@@ -130,48 +279,71 @@ export class ExperimentSetup {
 
     console.log(visHeigt)
 
-    if(this.experimentType=="Face")
-    {
-      this.shapeService.drawFace("svgContainer",visWidth,visHeigt)
-
-    }
-    if(this.experimentType=="TotemPole")
-    {
-      this.shapeService.drawMan("svgContainer",visWidth,visHeigt)
-    }
-    if(this.experimentType=="Petals"){
-      this.shapeService.drawPetals("svgContainer",visWidth,visHeigt);
-    }
-    if(this.experimentType=="Rectangle")
-    {
-      //this.parentRouter.navigateByUrl('/experiment');
-      this.shapeService.drawRectangles("svgContainer",visWidth,visHeigt,trainingSamples.features[0])
-      this.shapeService.drawRectangles("instructionSVG",visWidth,visHeigt,trainingSamples.features[0])
-
-
-    }
-
-    //Giving color to the span category
-    if(trainingSamples.true_category[this.sampleNumber-1]==1)
-    {
-      this.category1="crimson"
-      this.category2="gray"
-    }
-    else{
-      this.category1="gray"
-      this.category2="crimson"
-    }
-
+    // if(this.experimentType=="Face")
+    // {
+    //   this.shapeService.drawFace("svgContainer",visWidth,visHeigt,trainingSamples.features[0])
+    //   this.shapeService.drawFace("instructionSVG",visWidth,visHeigt,[true,true,true])
+    //
+    // }
+    // if(this.experimentType=="TotemPole")
+    // {
+    //   this.shapeService.drawMan("svgContainer",visWidth,visHeigt,trainingSamples.features[0])
+    //   this.shapeService.drawMan("instructionSVG",visWidth,visHeigt,[true,true,true])
+    //
+    // }
+    // if(this.experimentType=="Petals"){
+    //   this.shapeService.drawPetals("svgContainer",visWidth,visHeigt,trainingSamples.features[0]);
+    //   this.shapeService.drawPetals("instructionSVG",visWidth,visHeigt,[true,true,true])
+    //
+    // }
+    // if(this.experimentType=="Rectangle")
+    // {
+    //   //this.parentRouter.navigateByUrl('/experiment');
+    //   this.shapeService.drawRectangles("svgContainer",visWidth,visHeigt,trainingSamples.features[0])
+    //   this.shapeService.drawRectangles("instructionSVG",visWidth,visHeigt,trainingSamples.features[0])
+    // }
+    // //Giving color to the span category
+    // if(trainingSamples.true_category[this.sampleNumber-1]==1)
+    // {
+    //   this.category1="crimson"
+    //   this.category2="gray"
+    // }
+    // else{
+    //   this.category1="gray"
+    //   this.category2="crimson"
+    // }
 
   }
 
   fetchNextTrainingSample()
   {
-    //Displaying the next sample
-    this.sampleNumber=this.sampleNumber+1;
-    this.counterDisplay=this.sampleNumber+"/100"
+    if(this.sampleNumber<=this.numberofTrials-1) {
+      d3.select("#svgContainer").style("display", "")
+      d3.selectAll(".headerSpan").style("display", "")
+      //Displaying the next sample
+      this.sampleNumber = this.sampleNumber + 1;
+      this.counterDisplay = this.sampleNumber + "/"+this.numberofTrials
 
-    this.shapeService.drawRectangles("svgContainer",this.visWidth,this.visHeight,this.trainingSample.features[this.sampleNumber-1])
+      if (this.experimentType == "Face") {
+        this.shapeService.drawFace("svgContainer", this.visWidth, this.visHeight, this.trainingSample.features[this.sampleNumber - 1])
+
+      }
+
+      if (this.experimentType == "Rectangle") {
+        this.shapeService.drawRectangles("svgContainer", this.visWidth, this.visHeight, this.trainingSample.features[this.sampleNumber - 1])
+
+      }
+      if (this.experimentType == "Petals")
+      {
+        this.shapeService.drawPetals("svgContainer", this.visWidth, this.visHeight, this.trainingSample.features[this.sampleNumber - 1])
+
+      }
+      if (this.experimentType == "TotemPole")
+      {
+        this.shapeService.drawMan("svgContainer", this.visWidth, this.visHeight, this.trainingSample.features[this.sampleNumber - 1])
+
+      }
+
 
     //Giving color to the span category
     if(this.trainingSample.true_category[this.sampleNumber-1]==1)
@@ -183,21 +355,105 @@ export class ExperimentSetup {
       this.category1="gray"
       this.category2="crimson"
     }
+    }
+    else if(this.sampleNumber >this.numberofTrials-1 && this.sampleNumber<this.numberofTrials+1){
+      this.showExperimentInstruction()
+      this.sampleNumber=this.sampleNumber+1;
+    }
+    else if(this.sampleNumber>=this.numberofTrials+1 && this.sampleNumber<2*this.numberofTrials+1){
+      let tempSampleNumber=this.sampleNumber-this.numberofTrials;
+      this.counterDisplay = (tempSampleNumber) + "/"+this.numberofTrials;
+      this.category1="gray"
+      this.category2="gray"
+      this.checkKey=-1
+      this.doublePress=false
+      if(this.sampleNumber==this.numberofTrials+1)
+      {
+        d3.select("#svgContainer").style("display", "")
+        d3.select("#expins10").style("display", "none")
+        d3.selectAll(".headerSpan").style("display", "")
+        d3.select(".nextButton").style("display","none")
 
-    if(this.sampleNumber==2)
-    {
-        this.showExperimentInstruction()
+
+      }
+      if(this.experimentType=="Face")
+      {
+        this.shapeService.drawFace("svgContainer",this.visWidth,this.visHeight,this.testExamples.features[tempSampleNumber-1])
+
+      }
+      if(this.experimentType=="Rectangle"){
+        this.shapeService.drawRectangles("svgContainer",this.visWidth,this.visHeight,this.testExamples.features[tempSampleNumber-1])
+
+      }
+      if(this.experimentType=="Petals"){
+        this.shapeService.drawPetals("svgContainer",this.visWidth,this.visHeight,this.testExamples.features[tempSampleNumber-1])
+
+      }
+      if(this.experimentType=="TotemPole"){
+        this.shapeService.drawMan("svgContainer",this.visWidth,this.visHeight,this.testExamples.features[tempSampleNumber-1])
+
+      }
+
+      this.sampleNumber=this.sampleNumber+1;
+    }
+    else{
+      console.log("finished experiment")
+      console.log(this.responseArray)
+      this.experiment._responseArray=this.responseArray;
+      let workerId=this.experiment._workerid;
+      //Check at the time of
+      if(workerId=="")
+      {
+        workerId="ABC"+Math.floor((Math.random() * 1000) + 1);
+      }
+      let data={
+        workerid:workerId,
+        response:this.responseArray,
+        truelabels:this.experiment._trueCategory,
+        experimentType:this.experimentType
+
+      }
+
+      this.firebaseService.setData(data,"Pandey").subscribe(user => {
+        this.response= JSON.stringify(user)
+        localStorage.setItem('data',JSON.stringify(data) );
+        window.open("../exp.html","_self")
+      })
+
+
     }
 
-  }
-
-  showExperimentInstruction()
-  {
-    d3.select("#svgContainer").remove()
-    d3.select("#expins").style("display","")
-    d3.select("#expins1").style("display","")
 
   }
+
+  showExperimentInstruction() {
+      d3.select("#svgContainer").style("display", "none")
+      this.counterDisplay = ""
+      d3.select("#expins10").style("display", "")
+      d3.selectAll(".headerSpan").style("display", "none")
+
+    if(this.experimentType=="Face")
+    {
+      this.shapeService.drawFace("instructionSVG10",this.visWidth,this.visHeight,[true,true,true])
+
+    }
+    if(this.experimentType=="TotemPole")
+    {
+      this.shapeService.drawMan("instructionSVG10",this.visWidth,this.visHeight,[true,true,true])
+
+    }
+    if(this.experimentType=="Petals"){
+      this.shapeService.drawPetals("instructionSVG10",this.visWidth,this.visHeight,[true,true,true])
+
+    }
+    if(this.experimentType=="Rectangle")
+    {
+      //this.parentRouter.navigateByUrl('/experiment');
+      this.shapeService.drawRectangles("instructionSVG10",this.visWidth,this.visHeight,[true,true,true])
+    }
+  }
+
+
 
 
 }

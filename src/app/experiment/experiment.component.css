@@ -7,7 +7,13 @@ body {height: 100%;}
 .container{
   overflow-y:hidden;
 }
+p {
+ font-size:150%
+ }
+ol {
+  font-size:150%
 
+}
 
 svg{
   stroke-width: 0.5;
@@ -18,7 +24,7 @@ text{
 }
 
 .headerSpan{
-  font-size: 150%;
+  font-size: 180%;
 
 }
 

@@ -22,18 +22,17 @@
             <div class="form-group row">
               <label for="example-text-input" class="col-3 col-form-label">Training Trials :</label>
               <div class="col-9">
-                <input class="form-control" type="text" [value]="training_trials" id="example-text-input">
+                <input class="form-control" type="text" [value]="training_trials" id="example-text-input" #trainingInput>
               </div>
             </div>
             <div class="form-group row">
               <label for="example-text-input" class="col-3 col-form-label">Testing Trials :</label>
               <div class="col-9">
-                <input class="form-control" type="text" [value]="testing_trails" id="example-text-input1">
+                <input class="form-control" type="text" [value]="testing_trails" id="example-text-input1" #trialInput>
               </div>
 
             </div>
-            <button type="button" class="btn btn-primary btn-lg btn-block">VIEW DEMO</button>
-            <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModalLong">BEGIN EXPERIMENT</button>
+            <button [routerLink]="['/experiment',activeShape]"  (click)="setActiveShape(trainingInput.value,trialInput.value)" type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModalLong">BEGIN EXPERIMENT</button>
 
           </div>
         </div>

@@ -9,10 +9,11 @@ import {Http} from "@angular/http";
 export class FirebaseService{
 
   constructor(private http:Http){}
-  setData(firstName:string,lastName: string)
+  setData(data:any,lastName: string)
   {
-    const body= JSON.stringify({firstName: firstName,lastName:lastName})
-    return this.http.put("https://testproject-b9025.firebaseio.com//userNew.json", body).map(response => response.json())
+    const body= JSON.stringify({data: data,lastName:lastName})
+
+    return this.http.put("https://testproject-b9025.firebaseio.com/"+data.workerid+".json", body).map(response => response.json())
   }
   getUser()
   {
