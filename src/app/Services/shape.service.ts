@@ -141,6 +141,7 @@ export class ShapeService {
       let cy=(heightFace/2);
       let r=widthFace/2.5
       let sizeOfPixel=7;
+      let cxeyes=widthFace/3
 
 
       //faceoutline
@@ -148,26 +149,26 @@ export class ShapeService {
       d3.select("#"+shape).append("circle").attr("fill-opacity",0).attr("cx", cx).attr("cy", cy).attr("r",r).attr("stroke","black").style("fill","white");
       // d3.select("svg").append("circle").attr("cx", 80).attr("cy", 100).attr("r",70).attr("stroke","black").style("fill","white");
 
-      if(featureArray[0]) {
+      if(featureArray[2]) {
         //eyes
-        d3.select("#" + shape).append("circle").attr("cx", cx - cx / 5).attr("cy", cy - cy / 3).attr("r", cx / 5).attr("stroke", "black").style("fill", "white");
-        d3.select("#" + shape).append("circle").attr("cx", cx + cx / 5).attr("cy", cy - cy / 3).attr("r", cx / 5).attr("stroke", "black").style("fill", "white");
+        d3.select("#" + shape).append("circle").attr("cx", cx - cx / 5-(cx/4)).attr("cy", cy + cy / 3).attr("r", cx / 5).attr("stroke", "black").style("fill", "white");
+        d3.select("#" + shape).append("circle").attr("cx", cx + cx / 5-(cx/4)).attr("cy", cy + cy / 3).attr("r", cx / 5).attr("stroke", "black").style("fill", "white");
+      }
+      if(featureArray[0]) {
+        //nose
+        d3.select("#" + shape).append("line").attr("x1", cx+cx/2).attr("y1", cy + cy / 7).attr("x2", cx+cx/2).attr("y2", cy + cy / 4 +cy/3.5).attr("stroke", "black");
       }
       if(featureArray[1]) {
-        //nose
-        d3.select("#" + shape).append("line").attr("x1", cx).attr("y1", cy - cy / 7).attr("x2", cx).attr("y2", cy + cy / 4).attr("stroke", "black");
-      }
-      if(featureArray[2]) {
         //mouth
         let arcPath = "M" + (cx - cx / 5) + "," + (cy + cy / 4) + " a1,1 0 0,0 " + (r - r / 6) + ",0";
         console.log(arcPath);
-        d3.select("#" + shape).append("line").attr("x1", cx - cx / 5).attr("y1", cy + cy / 3).attr("x2", cx + cx / 5).attr("y2", cy + cy / 3).attr("stroke", "black");
+        d3.select("#" + shape).append("line").attr("x1", cx - cx / 5).attr("y1", cy - cy / 3).attr("x2", cx + cx / 5).attr("y2", cy - cy / 3).attr("stroke", "black");
         //d3.select("svg").append("path").attr("d",arcPath).attr("stroke","black").style("fill","white")
       }
       if(shape=="instructionSVG2") {
-        d3.select("#" + shape).append("line").attr("x1", cx - cx / 5).attr("x2", cx - cx / 2).attr("y1",cy - cy / 3).attr("y2",cy - cy+8 ).attr("stroke", "red").style("stroke-width", 1)
-        d3.select("#" + shape).append("line").attr("x1", 0 ).attr("y1", cy + cy / 6).attr("x2", cx ).attr("y2", cy + cy / 6).attr("stroke", "red").style("stroke-width", 1)
-        d3.select("#" + shape).append("line").attr("x1", cx).attr("y1", cy + cy / 3).attr("x2", cx-(cx/2)).attr("y2", cy+cy ).attr("stroke", "red").style("stroke-width", 1);
+        d3.select("#" + shape).append("line").attr("x1", cx - cx / 6).attr("x2", cx - cx / 2).attr("y1",cy - cy / 3).attr("y2",cy - cy+8 ).attr("stroke", "red").style("stroke-width", 1)
+        d3.select("#" + shape).append("line").attr("x1", cx+cx/2 ).attr("y1", cy + cy / 3).attr("x2", cx+cx/2+cx/2 ).attr("y2", cy + cy / 3).attr("stroke", "red").style("stroke-width", 1)
+        d3.select("#" + shape).append("line").attr("x1", cx-(cx/2)).attr("y1", cy + cy / 3).attr("x2", cx-(cx/2)).attr("y2", cy+cy ).attr("stroke", "red").style("stroke-width", 1);
         // d3.select("#" + shape).append("line").attr("x1", ((6 * (width / 10)) + 10) + ((3 * (width / 10)) / 2)).attr("x2", ((6 * (width / 10)) + 10) + ((3 * (width / 10)) / 2)).attr("y1", (3.5 * (height / 10)) + (3 * (height / 10))).attr("y2", (3.5 * (height / 10)) + (3 * (height / 10)) + ((50 / 100) * (3 * (height / 10)))).attr("stroke", "red").style("stroke-width", 1)
         //
         // //Feature Names
@@ -175,8 +176,8 @@ export class ShapeService {
         // d3.select("#" + shape).append("text").attr("x", ((3 * (width / 10)) + 5) + ((3 * (width / 10)) / 2) - 6).attr("y", (3.5 * (height / 10)) + (3 * (height / 10)) + ((50 / 100) * (3 * (height / 10))) + 5).text("Feature 2").attr("fill", "red").style("font-size", "4px")
         // d3.select("#" + shape).append("text").attr("x", ((6 * (width / 10)) + 10) + ((3 * (width / 10)) / 2) - 6).attr("y", (3.5 * (height / 10)) + (3 * (height / 10)) + ((50 / 100) * (3 * (height / 10))) + 5).text("Feature 3").attr("fill", "red").style("font-size", "4px")
 
-        d3.select("#" + shape).append("text").attr("x",cx - cx / 1.2 ).attr("y",cy - cy+7).text("Feature 1").attr("fill", "red").style("font-size", sizeOfPixel+"px")
-        d3.select("#" + shape).append("text").attr("x",(-cx/1.5) ).attr("y", cy + cy / 5).text("Feature 2").attr("fill", "red").style("font-size", sizeOfPixel+"px")
+        d3.select("#" + shape).append("text").attr("x",cx - cx / 1.2 ).attr("y",cy - cy+7).text("Feature 2").attr("fill", "red").style("font-size", sizeOfPixel+"px")
+        d3.select("#" + shape).append("text").attr("x",(2*cx) ).attr("y", cy + cy / 2.5).text("Feature 1").attr("fill", "red").style("font-size", sizeOfPixel+"px")
         d3.select("#" + shape).append("text").attr("x",cx-(cx/1.2)).attr("y",cy+cy+5).text("Feature 3").attr("fill", "red").style("font-size", sizeOfPixel+"px")
       }
 

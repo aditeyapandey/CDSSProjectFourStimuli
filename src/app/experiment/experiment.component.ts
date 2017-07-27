@@ -77,7 +77,7 @@ export class ExperimentSetup {
       this.sampleNumber=0;
       this.experiment._workerid=jsPsych.turk.turkInfo().workerId
       console.log(this.experiment._workerid);
-      this.numberofTrials=10;
+      this.numberofTrials=100;
       console.log(this.numberofTrials)
       this.counterDisplay=this.sampleNumber+"/"+this.numberofTrials
       this.checkKey=-1
@@ -374,6 +374,10 @@ export class ExperimentSetup {
         this.shapeService.drawFace("svgContainer", this.visWidth, this.visHeight, this.trainingSample.features[this.sampleNumber - 1])
 
       }
+      if (this.experimentType == "FaceScrambled") {
+        this.shapeService.drawFaceScrambled("svgContainer", this.visWidth, this.visHeight, this.trainingSample.features[this.sampleNumber - 1])
+
+      }
 
       if (this.experimentType == "Rectangle") {
         this.shapeService.drawRectangles("svgContainer", this.visWidth, this.visHeight, this.trainingSample.features[this.sampleNumber - 1])
@@ -426,6 +430,11 @@ export class ExperimentSetup {
         this.shapeService.drawFace("svgContainer",this.visWidth,this.visHeight,this.testExamples.features[tempSampleNumber-1])
 
       }
+      if(this.experimentType=="FaceScrambled")
+      {
+        this.shapeService.drawFaceScrambled("svgContainer",this.visWidth,this.visHeight,this.testExamples.features[tempSampleNumber-1])
+
+      }
       if(this.experimentType=="Rectangle"){
         this.shapeService.drawRectangles("svgContainer",this.visWidth,this.visHeight,this.testExamples.features[tempSampleNumber-1])
 
@@ -473,6 +482,7 @@ export class ExperimentSetup {
       }
 
       localStorage.setItem('data',JSON.stringify(data) );
+      console.log(data)
       window.open("../../exp.html","_self")
 
       // this.firebaseService.setData(data,"Pandey").subscribe(user => {
@@ -515,6 +525,12 @@ export class ExperimentSetup {
     {
       this.shapeService.drawRectangles("instructionSVG11",100,100,[true,true,true])
     }
+    if(this.experimentType=="FaceScrambled")
+    {
+      this.shapeService.drawFaceScrambled("instructionSVG11",100,100,[true,true,true])
+
+    }
+
   }
 
 
