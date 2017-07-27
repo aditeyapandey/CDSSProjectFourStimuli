@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1  class="text-sm-center">
-  <span class="headerSpan" [style.color]="category1">1</span> {{experimentType}} <span class="headerSpan" [style.color]="category2" color="red">2</span>
+  <span class="headerSpan" [style.color]="category1">1</span> {{title}} <span class="headerSpan" [style.color]="category2" color="red">2</span>
 </h1>
 
   <!--</div>-->
@@ -19,16 +19,16 @@
 
       <div class="col-8">
 
-        <div  id="expins10" class="card-block" style="display:none">
+        <div  id="expins11" class="card-block" style="display:none">
           <div class="row">
-            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG10">
+            <div class="col-6"><svg version="1.1" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG11">
             </svg></div>
             <div class="col-6">
 
-              <p>  Next, you'll see examples of figures and decide which family they belong to:</p>
-              <ol  >
-              <li> Press the '1' key for Family 1.</li>
-              <li> Press the '2' key for Family 2. </li>
+              <p>Next, you'll see examples of figures and decide which family they belong to:</p>
+              <ol>
+              <li> Press '1' for Family 1.</li>
+              <li> Press '2' for Family 2.</li>
               </ol>
 
             </div>
@@ -37,7 +37,7 @@
 
         <div  id="expins1" class="card-block" style="">
           <div class="row">
-            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG1">
+            <div class="col-6"><svg version="1.1" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG1">
             </svg></div>
             <div class="col-6" >
             <p>
@@ -49,7 +49,7 @@
 
         <div  id="expins2" class="card-block" style="display:none">
           <div class="row">
-            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG2">
+            <div class="col-8"><svg version="1.1" [attr.viewBox]="viewBoxInstruction" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG2">
 
               <!--<line *ngIf="experimentType=='Rectangle'" x1="10" y1="30" x2="10" y2="60" style="stroke:rgb(255,0,0);stroke-width:1" />-->
 
@@ -99,12 +99,9 @@
               <!--<text *ngIf="experimentType=='Face'" x="26" y="74" fill="red" style="font-size: 5px">Feature 3</text>-->
               <!--<text *ngIf="experimentType=='Face'" x="26" y="-3" fill="red" style="font-size: 5px">Feature 1</text>-->
 
-
-
-
             </svg>
             </div>
-            <div class="col-6" >
+            <div class="col-4" >
               <p>
                 Each figure can have 3 features.
               </p>
@@ -117,7 +114,7 @@
 
         <div  id="expins3" class="card-block" style="display:none">
           <div class="row">
-            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG3">
+            <div class="col-6"><svg version="1.1" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG3">
             </svg></div>
             <div class="col-6" >
               <p>
@@ -128,29 +125,29 @@
         </div>
         <div  id="expins4" class="card-block" style="display:none">
           <div class="row">
-            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG4">
+            <div class="col-6"><svg version="1.1" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG4">
             </svg></div>
             <div class="col-6" >
               <p>
-                This figure only has Feature 2.
+                This figure only has Feature<span style="opacity: 0">a</span>2.
               </p>
             </div>
           </div>
         </div>
         <div  id="expins5" class="card-block" style="display:none">
           <div class="row">
-            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG5">
+            <div class="col-6"><svg version="1.1" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG5">
             </svg></div>
             <div class="col-6" >
               <p>
-                This figure only has Feature 3.
+                This figure only has Feature<span style="opacity: 0">a</span>3.
               </p>
             </div>
           </div>
         </div>
         <div  id="expins6" class="card-block" style="display:none">
           <div class="row">
-            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG6">
+            <div class="col-6"><svg version="1.1" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG6">
             </svg></div>
             <div class="col-6" >
               <p>
@@ -165,7 +162,7 @@
         </div>
         <div  id="expins7" class="card-block" style="display:none">
           <div class="row">
-            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG7">
+            <div class="col-6"><svg version="1.1" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG7">
             </svg></div>
             <div class="col-6" >
               <p>
@@ -180,16 +177,13 @@
         </div>
         <div  id="expins8" class="card-block" style="display:none">
           <div class="row">
-            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG8">
+            <div class="col-6"><svg version="1.1" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG8">
             </svg></div>
             <div class="col-6" >
               <p>
                 Here are a couple things to be aware of:
               </p>
-              <ol >
-                <li> Each combination of features is present in each family, but will always be more common one family than the other.</li>
-                <li> About half of the figures are from Family 1 and half from Family 2. </li>
-              </ol>
+              <p>1. Each combination of features is present in each family, but will always be more common in one family than the other.</p>
 
 
             </div>
@@ -197,7 +191,20 @@
         </div>
         <div  id="expins9" class="card-block" style="display:none">
           <div class="row">
-            <div class="col-6"><svg version="1.1" viewBox="0 -10 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG9">
+            <div class="col-6"><svg version="1.1" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG9">
+            </svg></div>
+            <div class="col-6" >
+
+                <p>2. About half of the figures are from Family 1 and half from Family 2. </p>
+
+
+
+            </div>
+          </div>
+        </div>
+        <div  id="expins10" class="card-block" style="display:none">
+          <div class="row">
+            <div class="col-6"><svg version="1.1" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet" class="svg-content" id="instructionSVG10">
             </svg></div>
             <div class="col-6" >
               <p>

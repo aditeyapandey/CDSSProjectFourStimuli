@@ -21,6 +21,9 @@ export class Experiment {
   _workerid:string
   _responseArray:number[]
   _trueCategory:number[]
+  _stimuliTraining:string[]
+  _stimuliTest:string[]
+  _trainingTrueCategory:number[]
 
   constructor()
   {

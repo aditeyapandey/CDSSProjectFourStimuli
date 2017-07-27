@@ -24,7 +24,7 @@ text{
 }
 
 .headerSpan{
-  font-size: 180%;
+  font-size: 400%;
 
 }
 
@@ -71,3 +71,6 @@ text{
   outline:none
 }
 
+.card{
+  border-width: 0px;
+}

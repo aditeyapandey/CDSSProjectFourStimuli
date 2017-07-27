@@ -11,8 +11,8 @@ import { ExperimentSetup } from "./experiment/experiment.component"
 
 
 const routing = RouterModule.forRoot([
-  { path: '',      component: ShapeCreator },
-  { path: 'experiment/:id', component: ExperimentSetup }
+  { path: 'Shape',      component: ShapeCreator },
+  { path: ':id', component: ExperimentSetup }
 ]);
 
 
