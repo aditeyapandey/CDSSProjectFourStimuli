@@ -77,7 +77,7 @@ export class ExperimentSetup {
       this.sampleNumber=0;
       this.experiment._workerid=jsPsych.turk.turkInfo().workerId
       console.log(this.experiment._workerid);
-      this.numberofTrials=100;
+      this.numberofTrials=200;
       console.log(this.numberofTrials)
       this.counterDisplay=this.sampleNumber+"/"+this.numberofTrials
       this.checkKey=-1
@@ -153,60 +153,66 @@ export class ExperimentSetup {
 
   ngOnInit()
   {
-      this.sub = this.route.params.subscribe(params => {
-      this.experimentType = params['id']; // (+) converts string 'id' to a number
-      console.log(this.experimentType)
-      this.title="Experiment"
-      // In a real app: dispatch action to load the details here.
-      var x = d3.scaleOrdinal()
-        .domain([100, 90, 80, 70,60, 50,40,30,20])
-        .range([-5, -10, -15, -20, -25, -30, -35, -40, -45]);
-      this.innerWidth = (window.innerWidth) ;
-      this.innerHeight = (window.innerHeight)-(window.innerHeight/6);
-      //console.log("height of screen is",this.innerHeight)
-      this.viewbox=x(Math.floor(this.innerHeight/100)*10)+5+" "+"0 "+"100 "+Math.floor(this.innerHeight/100)*10;
-      if(this.experimentType=="TotemPole"||this.experimentType=="Face")
-      {
-        this.viewBoxInstruction="-60 -10 165 120"
-      }
-      else{
-        this.viewBoxInstruction="-30 -10 165 120"
-      }
-      this.loadInstructions();
-      this.testExperiment()
-    });
+    //   this.sub = this.route.params.subscribe(params => {
+    //   this.experimentType = params['id']; // (+) converts string 'id' to a number
+    //   //console.log(this.experimentType)
+    //   this.title="Experiment"
+    //   // In a real app: dispatch action to load the details here.
+    //   var x = d3.scaleOrdinal()
+    //     .domain([100, 90, 80, 70,60, 50,40,30,20])
+    //     .range([-5, -10, -15, -20, -25, -30, -35, -40, -45]);
+    //   this.innerWidth = (window.innerWidth) ;
+    //   this.innerHeight = (window.innerHeight)-(window.innerHeight/6);
+    //   //console.log("height of screen is",this.innerHeight)
+    //   this.viewbox=x(Math.floor(this.innerHeight/100)*10)+5+" "+"0 "+"100 "+Math.floor(this.innerHeight/100)*10;
+    //   if(this.experimentType=="TotemPole"||this.experimentType=="Face")
+    //   {
+    //     this.viewBoxInstruction="-60 -10 165 120"
+    //   }
+    //   else if(this.experimentType=="TotemPoleScrambled"){
+    //     this.viewBoxInstruction="-45 -10 165 120"
+    //   }
+    //   else{
+    //     this.viewBoxInstruction="-30 -10 165 120"
+    //   }
+    //   this.loadInstructions();
+    //   this.testExperiment()
+    // });
 
-    // let temp= window.location.href.split("/")
-    // console.log(temp)
-    // let shape=temp[temp.length-3]
-    // console.log(shape)
-    // this.experimentType = shape // (+) converts string 'id' to a number
-    // console.log(this.experimentType)
-    // this.title="Experiment"
-    // // In a real app: dispatch action to load the details here.
-    // var x = d3.scaleOrdinal()
-    //   .domain([100, 90, 80, 70,60, 50,40,30,20])
-    //   .range([-5, -10, -15, -20, -25, -30, -35, -40, -45]);
-    // this.innerWidth = (window.innerWidth) ;
-    // this.innerHeight = (window.innerHeight)-(window.innerHeight/5);
-    // console.log("height of screen is",this.innerHeight)
-    // this.viewbox=x(Math.floor(this.innerHeight/100)*10)+5+" "+"0 "+"100 "+Math.floor(this.innerHeight/100)*10;
-    // this.loadInstructions();
-    // this.testExperiment()
-    // if(this.experimentType=="TotemPole"||this.experimentType=="Face")
-    // {
-    //   this.viewBoxInstruction="-60 -10 165 120"
-    // }
-    // else{
-    //   this.viewBoxInstruction="-30 -10 165 120"
-    // }
+    let temp= window.location.href.split("/")
+    console.log(temp)
+    let shape=temp[temp.length-3]
+    console.log(shape)
+    this.experimentType = shape // (+) converts string 'id' to a number
+    console.log(this.experimentType)
+    this.title="Experiment"
+    // In a real app: dispatch action to load the details here.
+    var x = d3.scaleOrdinal()
+      .domain([100, 90, 80, 70,60, 50,40,30,20])
+      .range([-5, -10, -15, -20, -25, -30, -35, -40, -45]);
+    this.innerWidth = (window.innerWidth) ;
+    this.innerHeight = (window.innerHeight)-(window.innerHeight/5);
+    console.log("height of screen is",this.innerHeight)
+    this.viewbox=x(Math.floor(this.innerHeight/100)*10)+5+" "+"0 "+"100 "+Math.floor(this.innerHeight/100)*10;
+    this.loadInstructions();
+    this.testExperiment()
+    if(this.experimentType=="TotemPole"||this.experimentType=="Face")
+    {
+      this.viewBoxInstruction="-60 -10 165 120"
+    }
+    else if(this.experimentType=="TotemPoleScrambled"){
+         this.viewBoxInstruction="-45 -10 165 120"
+      }
+    else{
+      this.viewBoxInstruction="-30 -10 165 120"
+    }
 
   }
 
   loadInstructions()
   {
 
-    if(this.instructionPageNumber<10) {
+    if(this.instructionPageNumber<11) {
       d3.select("#expins"+this.instructionPageNumber).style("display","none")
       this.instructionPageNumber = this.instructionPageNumber + 1;
       d3.select("#expins" + this.instructionPageNumber).style("display", "")
@@ -218,92 +224,132 @@ export class ExperimentSetup {
 
       if (this.experimentType == "Rectangle") {
         if (this.instructionPageNumber == 3) {
-          this.shapeService.drawRectangles("instructionSVG" + this.instructionPageNumber, 100, 100, [true, false, false])
+          this.shapeService.drawRectangles("instructionSVG" + this.instructionPageNumber, 100, 100, [true, false, false,false])
 
         }
         else if (this.instructionPageNumber == 4) {
-          this.shapeService.drawRectangles("instructionSVG" + this.instructionPageNumber, 100, 100, [false, true, false])
+          this.shapeService.drawRectangles("instructionSVG" + this.instructionPageNumber, 100, 100, [false, true, false, false])
         }
         else if (this.instructionPageNumber == 5) {
-          this.shapeService.drawRectangles("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, true])
+          this.shapeService.drawRectangles("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, true, false])
+
+        }
+        else if (this.instructionPageNumber == 6) {
+          this.shapeService.drawRectangles("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, false,true])
 
         }
         else {
-          this.shapeService.drawRectangles("instructionSVG" + this.instructionPageNumber, 100, 100, [true, true, true])
+          this.shapeService.drawRectangles("instructionSVG" + this.instructionPageNumber, 100, 100, [true, true, true, true])
         }
       }
       if (this.experimentType == "Petals") {
 
         if (this.instructionPageNumber == 3) {
-          this.shapeService.drawPetals("instructionSVG" + this.instructionPageNumber, 100, 100, [true, false, false])
+          this.shapeService.drawPetals("instructionSVG" + this.instructionPageNumber, 100, 100, [true, false, false,false])
 
         }
         else if (this.instructionPageNumber == 4) {
-          this.shapeService.drawPetals("instructionSVG" + this.instructionPageNumber, 100, 100, [false, true, false])
+          this.shapeService.drawPetals("instructionSVG" + this.instructionPageNumber, 100, 100, [false, true, false,false])
 
         }
         else if (this.instructionPageNumber == 5) {
-          this.shapeService.drawPetals("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, true])
+          this.shapeService.drawPetals("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, true,false])
+
+        }
+        else if (this.instructionPageNumber == 6) {
+          this.shapeService.drawPetals("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, false,true])
 
         }
         else {
-          this.shapeService.drawPetals("instructionSVG" + this.instructionPageNumber, 100, 100, [true, true, true])
+          this.shapeService.drawPetals("instructionSVG" + this.instructionPageNumber, 100, 100, [true, true, true, true])
         }
       }
       if (this.experimentType == "TotemPole") {
         if (this.instructionPageNumber == 3) {
-          this.shapeService.drawMan("instructionSVG" + this.instructionPageNumber, 100, 100, [true, false, false])
+          this.shapeService.drawMan("instructionSVG" + this.instructionPageNumber, 100, 100, [true, false, false,false])
 
         }
         else if (this.instructionPageNumber == 4) {
-          this.shapeService.drawMan("instructionSVG" + this.instructionPageNumber, 100, 100, [false, true, false])
+          this.shapeService.drawMan("instructionSVG" + this.instructionPageNumber, 100, 100, [false, true, false,false])
 
         }
         else if (this.instructionPageNumber == 5) {
-          this.shapeService.drawMan("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, true])
+          this.shapeService.drawMan("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, true,false])
+
+        }
+        else if (this.instructionPageNumber == 6) {
+          this.shapeService.drawMan("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, false,true])
 
         }
         else {
-          this.shapeService.drawMan("instructionSVG" + this.instructionPageNumber, 100, 100, [true, true, true])
+          this.shapeService.drawMan("instructionSVG" + this.instructionPageNumber, 100, 100, [true, true, true, true])
         }
       }
       if (this.experimentType == "Face") {
         if (this.instructionPageNumber == 3) {
-          this.shapeService.drawFace("instructionSVG" + this.instructionPageNumber, 100, 100, [true, false, false])
+          this.shapeService.drawFace("instructionSVG" + this.instructionPageNumber, 100, 100, [true, false, false,false])
 
         }
         else if (this.instructionPageNumber == 4) {
-          this.shapeService.drawFace("instructionSVG" + this.instructionPageNumber, 100, 100, [false, true, false])
+          this.shapeService.drawFace("instructionSVG" + this.instructionPageNumber, 100, 100, [false, true, false,false])
 
         }
         else if (this.instructionPageNumber == 5) {
-          this.shapeService.drawFace("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, true])
+          this.shapeService.drawFace("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, true,false])
+
+        }
+        else if (this.instructionPageNumber == 6) {
+          this.shapeService.drawFace("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, false,true])
 
         }
         else {
-          this.shapeService.drawFace("instructionSVG" + this.instructionPageNumber, 100, 100, [true, true, true])
+          this.shapeService.drawFace("instructionSVG" + this.instructionPageNumber, 100, 100, [true, true, true, true,true])
         }
       }
       if (this.experimentType == "FaceScrambled") {
         if (this.instructionPageNumber == 3) {
-          this.shapeService.drawFaceScrambled("instructionSVG" + this.instructionPageNumber, 100, 100, [true, false, false])
+          this.shapeService.drawFaceScrambled("instructionSVG" + this.instructionPageNumber, 100, 100, [true, false, false,false])
 
         }
         else if (this.instructionPageNumber == 4) {
-          this.shapeService.drawFaceScrambled("instructionSVG" + this.instructionPageNumber, 100, 100, [false, true, false])
+          this.shapeService.drawFaceScrambled("instructionSVG" + this.instructionPageNumber, 100, 100, [false, true, false, false])
 
         }
         else if (this.instructionPageNumber == 5) {
-          this.shapeService.drawFaceScrambled("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, true])
+          this.shapeService.drawFaceScrambled("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, true, false])
+
+        }
+        else if (this.instructionPageNumber == 6) {
+          this.shapeService.drawFaceScrambled("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, false, true])
 
         }
         else {
-          this.shapeService.drawFaceScrambled("instructionSVG" + this.instructionPageNumber, 100, 100, [true, true, true])
+          this.shapeService.drawFaceScrambled("instructionSVG" + this.instructionPageNumber, 100, 100, [true, true, true, true])
+        }
+      }
+      if (this.experimentType == "TotemPoleScrambled") {
+        if (this.instructionPageNumber == 3) {
+          this.shapeService.drawManScrambled("instructionSVG" + this.instructionPageNumber, 100, 100, [true, false, false,false])
+        }
+        else if (this.instructionPageNumber == 4) {
+          this.shapeService.drawManScrambled("instructionSVG" + this.instructionPageNumber, 100, 100, [false, true, false, false])
+
+        }
+        else if (this.instructionPageNumber == 5) {
+          this.shapeService.drawManScrambled("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, true, false])
+
+        }
+        else if (this.instructionPageNumber == 6) {
+          this.shapeService.drawManScrambled("instructionSVG" + this.instructionPageNumber, 100, 100, [false, false, false, true])
+
+        }
+        else {
+          this.shapeService.drawManScrambled("instructionSVG" + this.instructionPageNumber, 100, 100, [true, true, true, true])
         }
       }
     }
     else{
-      console.log("ok")
+      //console.log("ok")
       d3.select("#expins"+this.instructionPageNumber).style("display","none")
       this.fetchNextTrainingSample();
     }
@@ -333,8 +379,6 @@ export class ExperimentSetup {
 
     let stimuliArray=[];
 
-
-
     this.experiment._stimuliTraining=this.stringyfyStimuli(this.trainingSample.features);
     this.experiment._stimuliTest=this.stringyfyStimuli(this.testExamples.features);
 
@@ -350,11 +394,10 @@ export class ExperimentSetup {
   {
     let stimuli=stimuliVals
     let stimuliArray=[];
-
     for(let i=0;i<stimuli.length;i++)
     {
       let featurestemp=stimuli[i];
-      let stimuliarrayvalues=featurestemp[0]+"-"+featurestemp[1]+"-"+featurestemp[2];
+      let stimuliarrayvalues=featurestemp[0]+"-"+featurestemp[1]+"-"+featurestemp[2]+"-"+featurestemp[3]
       stimuliArray.push(stimuliarrayvalues);
     }
     return stimuliArray
@@ -376,6 +419,10 @@ export class ExperimentSetup {
       }
       if (this.experimentType == "FaceScrambled") {
         this.shapeService.drawFaceScrambled("svgContainer", this.visWidth, this.visHeight, this.trainingSample.features[this.sampleNumber - 1])
+
+      }
+      if (this.experimentType == "TotemPoleScrambled") {
+        this.shapeService.drawManScrambled("svgContainer", this.visWidth, this.visHeight, this.trainingSample.features[this.sampleNumber - 1])
 
       }
 
@@ -421,19 +468,17 @@ export class ExperimentSetup {
       if(this.sampleNumber==this.numberofTrials+1)
       {
         d3.select("#svgContainer").style("display", "")
-        d3.select("#expins11").style("display", "none")
+        d3.select("#expins12").style("display", "none")
         d3.selectAll(".headerSpan").style("display", "")
         d3.select(".nextButton").style("display","none")
       }
       if(this.experimentType=="Face")
       {
         this.shapeService.drawFace("svgContainer",this.visWidth,this.visHeight,this.testExamples.features[tempSampleNumber-1])
-
       }
       if(this.experimentType=="FaceScrambled")
       {
         this.shapeService.drawFaceScrambled("svgContainer",this.visWidth,this.visHeight,this.testExamples.features[tempSampleNumber-1])
-
       }
       if(this.experimentType=="Rectangle"){
         this.shapeService.drawRectangles("svgContainer",this.visWidth,this.visHeight,this.testExamples.features[tempSampleNumber-1])
@@ -445,7 +490,10 @@ export class ExperimentSetup {
       }
       if(this.experimentType=="TotemPole"){
         this.shapeService.drawMan("svgContainer",this.visWidth,this.visHeight,this.testExamples.features[tempSampleNumber-1])
-
+      }
+      if(this.experimentType=="TotemPoleScrambled")
+      {
+        this.shapeService.drawManScrambled("svgContainer",this.visWidth,this.visHeight,this.testExamples.features[tempSampleNumber-1])
       }
 
       this.sampleNumber=this.sampleNumber+1;
@@ -502,32 +550,37 @@ export class ExperimentSetup {
   showExperimentInstruction() {
       d3.select("#svgContainer").style("display", "none")
       this.counterDisplay = ""
-      d3.select("#expins11").style("display", "")
+      d3.select("#expins12").style("display", "")
       d3.selectAll(".headerSpan").style("display", "none")
       this.title="Experiment"
 
 
     if(this.experimentType=="Face")
     {
-      this.shapeService.drawFace("instructionSVG11",100,100,[true,true,true])
+      this.shapeService.drawFace("instructionSVG12",100,100,[true,true,true,true])
 
     }
     if(this.experimentType=="TotemPole")
     {
-      this.shapeService.drawMan("instructionSVG11",100,100,[true,true,true])
+      this.shapeService.drawMan("instructionSVG12",100,100,[true,true,true,true])
 
     }
     if(this.experimentType=="Petals"){
-      this.shapeService.drawPetals("instructionSVG11",100,100,[true,true,true])
+      this.shapeService.drawPetals("instructionSVG12",100,100,[true,true,true,true])
 
     }
     if(this.experimentType=="Rectangle")
     {
-      this.shapeService.drawRectangles("instructionSVG11",100,100,[true,true,true])
+      this.shapeService.drawRectangles("instructionSVG12",100,100,[true,true,true,true])
     }
     if(this.experimentType=="FaceScrambled")
     {
-      this.shapeService.drawFaceScrambled("instructionSVG11",100,100,[true,true,true])
+      this.shapeService.drawFaceScrambled("instructionSVG12",100,100,[true,true,true,true])
+
+    }
+    if(this.experimentType=="TotemPoleScrambled")
+    {
+      this.shapeService.drawManScrambled("instructionSVG12",100,100,[true,true,true,true])
 
     }
 
